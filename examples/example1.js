@@ -3,10 +3,7 @@ const { fromReadStream } = require("../index");
 const { map, delay } = require("rxjs/operators");
 const { tap } = require("rxjs/internal/operators/tap");
 
-const rs = createReadStream("tests/test1.input.txt", {
-  encoding: "utf-8",
-  highWaterMark: 16,
-});
+const rs = createReadStream("tests/test1.input.txt");
 
 fromReadStream(rs)
   .pipe(
