@@ -112,6 +112,7 @@ class StreamingObservable<T> {
   constructor(__stream: stream.Readable) {
     this._stream = __stream;
     this._obs = new Observable<T>((subscriber) => {
+      __stream.on('error', (error) => subscriber.error(error));
       __stream.on("end", (_: any) => subscriber.complete());
       __stream.on("data", (data) => {
         __stream.pause();
