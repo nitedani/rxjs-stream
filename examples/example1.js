@@ -3,7 +3,10 @@ const { fromReadStream } = require("../index");
 const { map, delay } = require("rxjs/operators");
 const { tap } = require("rxjs/internal/operators/tap");
 
-const rs = createReadStream("tests/test1.input.txt");
+const rs = createReadStream("examples/example1.input.txt", {
+  encoding: "utf-8",
+  highWaterMark: 8,
+});
 
 fromReadStream(rs)
   .pipe(
@@ -13,4 +16,9 @@ fromReadStream(rs)
     map((chunk) => chunk.toLowerCase()),
     delay(1000)
   )
-  .subscribe((chunk) => console.log(chunk));
+  .subscribe({
+    next: (chunk) => console.log(chunk),
+    complete: () => {
+      console.log("complete");
+    },
+  });
