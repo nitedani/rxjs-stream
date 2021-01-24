@@ -1,18 +1,32 @@
 {
-  "name": "rxjs-stream",
+  "name": "@nitedani/rxjs-stream",
   "version": "0.0.1",
-  "description": "",
   "main": "index.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "nitedani",
   "license": "ISC",
   "dependencies": {
     "rxjs": "^6.6.3"
   },
   "devDependencies": {
     "@types/node": "^14.14.22"
-  }
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nitedani/rxjs-stream.git"
+  },
+  "bugs": {
+    "url": "https://github.com/nitedani/rxjs-stream/issues"
+  },
+  "homepage": "https://github.com/nitedani/rxjs-stream#readme",
+  "description": ""
 }
