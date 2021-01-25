@@ -6,6 +6,7 @@ class StreamingObservable {
     constructor(__stream) {
         this._stream = __stream;
         this._obs = new rxjs_1.Observable((subscriber) => {
+            __stream.on('error', (error) => subscriber.error(error));
             __stream.on("end", (_) => subscriber.complete());
             __stream.on("data", (data) => {
                 __stream.pause();
