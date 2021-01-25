@@ -25,7 +25,7 @@ class StreamingObservable {
         const obs = pipe_1.pipeFromArray(operations)(this._obs);
         return {
             ...obs,
-            pipe: this.pipe,
+            //pipe: this.pipe, I don't know how to do pipe chaining, please help rewrite this mess :) 
             toPromise: obs.toPromise,
             subscribe: this.subscribe(obs),
         };

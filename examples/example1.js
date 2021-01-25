@@ -16,6 +16,7 @@ fromReadStream(rs)
     map((chunk) => chunk.toLowerCase()),
     delay(1000)
   )
+
   .subscribe({
     next: (chunk) => console.log(chunk),
     complete: () => {
