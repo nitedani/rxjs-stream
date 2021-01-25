@@ -3,83 +3,6 @@ import { pipeFromArray } from "rxjs/internal/util/pipe";
 import stream from "stream";
 
 class StreamingObservable<T> {
-  //@ts-ignore
-  pipe(): Observable<T>;
-  pipe<A>(op1: OperatorFunction<T, A>): Observable<A>;
-  pipe<A, B>(
-    op1: OperatorFunction<T, A>,
-    op2: OperatorFunction<A, B>
-  ): Observable<B>;
-  pipe<A, B, C>(
-    op1: OperatorFunction<T, A>,
-    op2: OperatorFunction<A, B>,
-    op3: OperatorFunction<B, C>
-  ): Observable<C>;
-  pipe<A, B, C, D>(
-    op1: OperatorFunction<T, A>,
-    op2: OperatorFunction<A, B>,
-    op3: OperatorFunction<B, C>,
-    op4: OperatorFunction<C, D>
-  ): Observable<D>;
-  pipe<A, B, C, D, E>(
-    op1: OperatorFunction<T, A>,
-    op2: OperatorFunction<A, B>,
-    op3: OperatorFunction<B, C>,
-    op4: OperatorFunction<C, D>,
-    op5: OperatorFunction<D, E>
-  ): Observable<E>;
-  pipe<A, B, C, D, E, F>(
-    op1: OperatorFunction<T, A>,
-    op2: OperatorFunction<A, B>,
-    op3: OperatorFunction<B, C>,
-    op4: OperatorFunction<C, D>,
-    op5: OperatorFunction<D, E>,
-    op6: OperatorFunction<E, F>
-  ): Observable<F>;
-  pipe<A, B, C, D, E, F, G>(
-    op1: OperatorFunction<T, A>,
-    op2: OperatorFunction<A, B>,
-    op3: OperatorFunction<B, C>,
-    op4: OperatorFunction<C, D>,
-    op5: OperatorFunction<D, E>,
-    op6: OperatorFunction<E, F>,
-    op7: OperatorFunction<F, G>
-  ): Observable<G>;
-  pipe<A, B, C, D, E, F, G, H>(
-    op1: OperatorFunction<T, A>,
-    op2: OperatorFunction<A, B>,
-    op3: OperatorFunction<B, C>,
-    op4: OperatorFunction<C, D>,
-    op5: OperatorFunction<D, E>,
-    op6: OperatorFunction<E, F>,
-    op7: OperatorFunction<F, G>,
-    op8: OperatorFunction<G, H>
-  ): Observable<H>;
-  pipe<A, B, C, D, E, F, G, H, I>(
-    op1: OperatorFunction<T, A>,
-    op2: OperatorFunction<A, B>,
-    op3: OperatorFunction<B, C>,
-    op4: OperatorFunction<C, D>,
-    op5: OperatorFunction<D, E>,
-    op6: OperatorFunction<E, F>,
-    op7: OperatorFunction<F, G>,
-    op8: OperatorFunction<G, H>,
-    op9: OperatorFunction<H, I>
-  ): Observable<I>;
-  //@ts-ignore
-  pipe<A, B, C, D, E, F, G, H, I>(
-    op1: OperatorFunction<T, A>,
-    op2: OperatorFunction<A, B>,
-    op3: OperatorFunction<B, C>,
-    op4: OperatorFunction<C, D>,
-    op5: OperatorFunction<D, E>,
-    op6: OperatorFunction<E, F>,
-    op7: OperatorFunction<F, G>,
-    op8: OperatorFunction<G, H>,
-    op9: OperatorFunction<H, I>,
-    ...operations: OperatorFunction<any, any>[]
-  ): Observable<{}>;
-
   pipe() {
     const operations: OperatorFunction<any, any>[] = [];
     for (let _i = 0; _i < arguments.length; _i++) {
@@ -98,9 +21,10 @@ class StreamingObservable<T> {
   }
   static create = <T>(_stream: stream.Readable): Observable<T> => {
     const obs = new StreamingObservable<T>(_stream);
-    //@ts-ignore
+
     return {
       ...obs,
+      //@ts-ignore
       pipe: obs.pipe.bind(obs),
       subscribe: obs.subscribe(obs._obs),
       toPromise: obs._obs.toPromise,
@@ -112,7 +36,7 @@ class StreamingObservable<T> {
   constructor(__stream: stream.Readable) {
     this._stream = __stream;
     this._obs = new Observable<T>((subscriber) => {
-      __stream.on('error', (error) => subscriber.error(error));
+      __stream.on("error", (error) => subscriber.error(error));
       __stream.on("end", (_: any) => subscriber.complete());
       __stream.on("data", (data) => {
         __stream.pause();

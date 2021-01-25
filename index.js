@@ -6,7 +6,7 @@ class StreamingObservable {
     constructor(__stream) {
         this._stream = __stream;
         this._obs = new rxjs_1.Observable((subscriber) => {
-            __stream.on('error', (error) => subscriber.error(error));
+            __stream.on("error", (error) => subscriber.error(error));
             __stream.on("end", (_) => subscriber.complete());
             __stream.on("data", (data) => {
                 __stream.pause();
@@ -68,9 +68,9 @@ class StreamingObservable {
 }
 StreamingObservable.create = (_stream) => {
     const obs = new StreamingObservable(_stream);
-    //@ts-ignore
     return {
         ...obs,
+        //@ts-ignore
         pipe: obs.pipe.bind(obs),
         subscribe: obs.subscribe(obs._obs),
         toPromise: obs._obs.toPromise,
